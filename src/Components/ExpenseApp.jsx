@@ -1,22 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TransActionsComponent from "./TransActionsComponent";
+import OverViewComponent from "./OverViewComponent";
 
 const ExpenseApp = () => {
-  const [expens, setExpens] = useState(0);
+  const [expense, setExpense] = useState(0);
   const [income, setIncome] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const addTransaction = (formValues) => {
+    setTransactions([...transactions, { ...formValues, id: Date.now }]);
+  };
+
+  useEffect(() => {
+    let exp = 0;
+    let inc = 0;
+
+    transactions.forEach((t) => {
+      t.type === "expense"
+        ? (exp = exp + parseFloat(t.amount))
+        : (inc = inc + parseFloat(t.amount));
+    });
+    setExpense(exp);
+    setIncome(inc);
+  }, [transactions]);
 
   return (
     <section className="container">
-      <div className="topSection">
-        <p>Balance is : {income - expens}</p>
-        <button>Add</button>
-      </div>
-      <div className="resaultSection">
-        <div>Expense {expens}</div>
-        <div>Income {income}</div>
-      </div>
-      <TransActionsComponent transactions={transactions}/>
+      <OverViewComponent
+        income={income}
+        expense={expense}
+        addTransaction={addTransaction}
+      />
+      <TransActionsComponent transactions={transactions} />
     </section>
   );
 };
