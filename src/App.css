@@ -122,3 +122,13 @@ header h2 {
   padding: 10px;
   background-color: #f4f4f4;
 }
+
+.search{
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #efefef;
+  width: 100%;
+  margin: 20px 0;
+}
